@@ -31,10 +31,10 @@ begin
 		    threads_num += 1
 		    dr = dirstmp.shift 
 	        Dir.chdir(dr)
-	        system(solver)
+	        exec(solver)
 		    Dir.chdir("../lua-femtk/")
 		    postprocessor = "lua frd2exo.lua -f -2 -sets ../sets.nc -voln 100 -surfn 200 " + dr + work_file + dr + project_name + ".exo"
-		    system(postprocessor)
+		    exec(postprocessor)
 		    Dir.chdir("../")
 			dirs.delete(dr)
 			threads_num -= 1
