@@ -2,7 +2,7 @@
 directory = "./" 
 project_name = "sp3"
 max_threads_num = 14
-repo_name = "https://github.com/zertyuiop/ccx-scripts"
+repo_name = "https://github.com/zertyuiop/CalculiX-git"
 reload_time = 1
 
 work_file = project_name + ".frd"
