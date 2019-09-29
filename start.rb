@@ -24,8 +24,8 @@ dirstmp = dirs
 threads = []
 threads_num = 0
 gi = 0
-
-begin
+loop do
+#begin
     #if (threads_num < max_threads_num) && (dirstmp.size > 0)
         threads << Thread.new do
 		    threads_num += 1
@@ -56,7 +56,8 @@ begin
 	
 	gi += 1
 	sleep 3
-end until dirs.size > 0
+#end until dirs.size > 0
+end
 
 threads.each(&:join)
 
