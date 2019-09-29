@@ -1,5 +1,5 @@
 #!/usr/bin/ruby
-directory = "./" 
+directory = "/home/lifanovyaroslav_gmail_com/CalculiX-git/" 
 project_name = "unisphere_ES"
 max_threads_num = 14
 repo_name = "https://github.com/zertyuiop/CalculiX-git"
