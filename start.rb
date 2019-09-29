@@ -24,9 +24,9 @@ dirstmp = dirs
 threads = []
 threads_num = 0
 gi = 0
-loop do
-#begin
-    #if (threads_num < max_threads_num) && (dirstmp.size > 0)
+
+begin
+    if (threads_num < max_threads_num) && (dirstmp.size > 0)
         threads << Thread.new do
 		    threads_num += 1
 		    dr = dirstmp.shift 
@@ -39,7 +39,7 @@ loop do
 			dirs.delete(dr)
 			threads_num -= 1
 	    end
-	#end
+	end
 	
 	if gi >= reload_time * 1200.0
 	    system(git) 
@@ -56,8 +56,7 @@ loop do
 	
 	gi += 1
 	sleep 3
-#end until dirs.size > 0
-end
+end while dirs.size > 0
 
 threads.each(&:join)
 
