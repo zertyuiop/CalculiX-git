@@ -26,18 +26,20 @@ threads_num = 0
 gi = 0
 
 begin
-    if (threads.size < max_threads_num) && (dirstmp.size > 0)
-		threads << fork do
+    #if (threads_num < max_threads_num) && (dirstmp.size > 0)
+        threads << Thread.new do
+		    threads_num += 1
 		    dr = dirstmp.shift 
 	        Dir.chdir(dr)
 	        system(solver)
 		    Dir.chdir("../lua-femtk/")
 		    postprocessor = "lua frd2exo.lua -f -2 -sets ../sets.nc -voln 100 -surfn 200 " + dr + work_file + dr + project_name + ".exo"
 		    system(postprocessor)
-			Dir.chdir("../")
+		    Dir.chdir("../")
 			dirs.delete(dr)
+			threads_num -= 1
 	    end
-	end
+	#end
 	
 	if gi >= reload_time * 1200.0
 	    system(git) 
@@ -56,6 +58,6 @@ begin
 	sleep 3
 end until dirs.size > 0
 
-threads.each(&:detach)
+threads.each(&:join)
 
 system("sudo shutdown -h now")
