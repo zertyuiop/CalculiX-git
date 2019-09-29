@@ -1,0 +1,40 @@
+** Uniaxial test, sphere in cube, Netgen-generated mesh
+** Eshelby-like mode
+*INCLUDE, INPUT=sphereincube_medium_geo.inp
+*MATERIAL,NAME=EL1
+*ELASTIC,TYPE=ISO
+90.e3,.35,300.
+*CREEP
+4.0194e-11,1.,0.,300
+*MATERIAL,NAME=EL2
+*ELASTIC,TYPE=ISO
+190.e3,.21,300.
+*CREEP
+4.0194e-11,1.,0.,300
+*SOLID SECTION,ELSET=EMAT1,MATERIAL=EL1
+*SOLID SECTION,ELSET=EMAT2,MATERIAL=EL2
+**
+*STEP
+*STATIC
+*NODE FILE,Nset=Nall
+RF,U
+** *NODE PRINT,Nset=Nall
+** RF,U
+*EL FILE
+E,S
+** *EL PRINT,Elset=Eall
+** E,S
+*END STEP
+*STEP,INC=10000
+*VISCO,CETOL=1.e-8
+1.,432000.
+*NODE FILE,Nset=Nall
+RF,U
+** *NODE PRINT,Nset=Nall
+** RF,U
+*EL FILE
+E,S
+** *EL PRINT,Elset=Eall
+** E,S
+*END STEP
+
