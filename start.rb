@@ -26,18 +26,16 @@ threads_num = 0
 gi = 0
 
 begin
-    if (threads_num < max_threads_num) && (dirstmp.size > 0)
-        threads << Thread.new do
-		    threads_num += 1
+    if (threads.size < max_threads_num) && (dirstmp.size > 0)
+		threads << fork do
 		    dr = dirstmp.shift 
 	        Dir.chdir(dr)
-	        IO.popen(solver)
+	        system(solver)
 		    Dir.chdir("../lua-femtk/")
 		    postprocessor = "lua frd2exo.lua -f -2 -sets ../sets.nc -voln 100 -surfn 200 " + dr + work_file + dr + project_name + ".exo"
-		    IO.popen(postprocessor)
+		    system(postprocessor)
 			Dir.chdir("../")
 			dirs.delete(dr)
-			threads_num -= 1
 	    end
 	end
 	
@@ -58,6 +56,6 @@ begin
 	sleep 3
 end until dirs.size > 0
 
-threads.each(&:join)
+threads.each(&:detach)
 
 system("sudo shutdown -h now")
