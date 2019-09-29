@@ -9,11 +9,6 @@ work_file = project_name + ".frd"
 solver = "/usr/bin/time -o " + project_name + ".time ccx -i " + project_name + " 2>&1 | tee -a " + project_name + ".dump"
 dirs = Array.new
 git = "git pull " + repo_name
-out = directory + "out.txt"
-err = directory + "err.txt"
-
-stdout.reopen(out, "w")
-stderr.reopen(err, "w")
 
 system(git)
 list = Dir.entries(directory).select {|entry| File.directory? File.join(directory,entry) and !(entry == "." || entry == ".." || entry == "lua-femtk" || entry == ".git") }
