@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 directory = "./" 
-project_name = "sp3"
+project_name = "unisphere_ES"
 max_threads_num = 14
 repo_name = "https://github.com/zertyuiop/CalculiX-git"
 reload_time = 1
