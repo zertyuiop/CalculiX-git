@@ -6,7 +6,7 @@ repo_name = "https://github.com/zertyuiop/CalculiX-git"
 reload_time = 1
 
 work_file = project_name + ".frd"
-solver = "/usr/bin/time -o " + project_name + ".time ccx -i " + project_name + " 2>&1 | tee -a " + project_name + ".dump"
+solver = "screen /usr/bin/time -o " + project_name + ".time ccx -i " + project_name + " 2>&1 | tee -a " + project_name + ".dump"
 dirs = Array.new
 git = "git pull " + repo_name
 
@@ -33,7 +33,7 @@ begin
 	        Dir.chdir(dr)
 	        system(solver)
 		    Dir.chdir("../lua-femtk/")
-		    postprocessor = "lua frd2exo.lua -f -2 -sets ../sets.nc -voln 100 -surfn 200 " + dr + work_file + dr + project_name + ".exo"
+		    postprocessor = "screen lua frd2exo.lua -f -2 -sets ../sets.nc -voln 100 -surfn 200 " + dr + work_file + dr + project_name + ".exo"
 		    system(postprocessor)
 		    Dir.chdir("../")
 			dirs.delete(dr)
