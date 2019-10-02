@@ -1,10 +1,12 @@
 #!/usr/bin/ruby
-directory = "/home/lifanovyaroslav_gmail_com/CalculiX-git/" 
+dir_name = "CalculiX-git" 
 project_name = "sp3"
-max_threads_num = 6
 repo_name = "https://github.com/zertyuiop/CalculiX-git"
 reload_time = 1
+#download_dir = "/mnt/d/CalculiX/"
 
+directory = Dir.home + "/" + dir_name + "/"
+max_threads_num = ENV["OMP_NUM_THREADS"].to_i - 2
 work_file = project_name + ".frd"
 solver = "/usr/bin/time -o " + project_name + ".time ccx -i " + project_name + " 2>&1 | tee -a " + project_name + ".dump"
 dirs = Array.new
@@ -36,6 +38,13 @@ begin
 		    postprocessor = "lua frd2exo.lua -f -2 -sets ../sets.nc -voln 100 -surfn 200 " + dr + work_file + dr + project_name + ".exo"
 		    system(postprocessor)
 		    Dir.chdir("../")
+			Dir.chdir(dr)
+			compress = "GZIP=-9 tar cvzf " + File.basename(Dir.getwd) + ".tgz ."
+			system(compress)
+			#host = `hostname`
+			#gcloud = "gcloud beta compute scp --compress " + host + ":" + File.basename(Dir.getwd) + ".tgz " + download_dir
+			#File.open('gcloud.txt', 'w') { |file| file.write(gcloud) }
+			Dir.chdir("../")
 			dirs.delete(dr)
 			threads_num -= 1
 	    end
