@@ -35,11 +35,11 @@ begin
 	        Dir.chdir(dr)
 	        system(solver)
 		    Dir.chdir("../lua-femtk/")
-		    postprocessor = "lua frd2exo.lua -f -2 -sets ../sets.nc -voln 100 -surfn 200 " + dr + work_file + dr + project_name + ".exo"
+		    postprocessor = "lua frd2exo.lua -f -2 -sets ../sets.nc -voln 100 -surfn 200 " + dr + "/" + work_file + " " + dr + "/" + project_name + ".exo 2>&1 | tee -a " + project_name + ".co.dump"
 		    system(postprocessor)
 		    Dir.chdir("../")
 			Dir.chdir(dr)
-			compress = "GZIP=-9 tar cvzf " + File.basename(Dir.getwd) + ".tgz ."
+			compress = "tar cvzf " + File.basename(Dir.getwd) + ".tgz . 2>&1 | tee -a " + project_name + ".ar.dump"
 			system(compress)
 			#host = `hostname`
 			#gcloud = "gcloud beta compute scp --compress " + host + ":" + File.basename(Dir.getwd) + ".tgz " + download_dir
