@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 dir_name = "CalculiX-git" 
-project_name = "sp3"
+project_name = "sp_one"
 repo_name = "https://github.com/zertyuiop/CalculiX-git"
 reload_time = 1
 #download_dir = "/mnt/d/CalculiX/"
